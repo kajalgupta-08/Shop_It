@@ -17,7 +17,7 @@ class _LoginpageState extends State<Loginpage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  // ✅ Email/Password Login
+
   void signuserin() async {
     final email = emcont.text.trim();
     final password = passcont.text.trim();
@@ -49,17 +49,17 @@ class _LoginpageState extends State<Loginpage> {
           errorMessage = e.message ?? 'An unknown error occurred';
       }
 
-      // Show error message
+      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(errorMessage), backgroundColor: Colors.red),
       );
     }
   }
 
-  // ✅ Google Sign-In
+
   Future<void> signInWithGoogle() async {
     try {
-      // Sign out first to force account picker
+    
       await _googleSignIn.signOut();
 
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
