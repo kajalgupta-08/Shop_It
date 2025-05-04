@@ -25,7 +25,7 @@ class _ProductListState extends State<ProductList> {
     searchController.addListener(_onSearchChanged);  
   }
 
-  // Function to handle changes in the search input
+
   void _onSearchChanged() {
     setState(() {
       searchQuery = searchController.text.toLowerCase();  
@@ -35,14 +35,14 @@ class _ProductListState extends State<ProductList> {
   List<Map<String, Object>> get filteredProducts {
     List<Map<String, Object>> filteredList = products;
 
-    // Apply category filter
+   
     if (selectedfilter != 'All') {
       filteredList = filteredList.where((product) {
         return product['company'] == selectedfilter;
       }).toList();
     }
 
-    // Apply search query filter
+   
     if (searchQuery.isNotEmpty) {
       filteredList = filteredList.where((product) {
         return product['title'].toString().toLowerCase().contains(searchQuery) ||
@@ -55,7 +55,7 @@ class _ProductListState extends State<ProductList> {
 
   @override
   void dispose() {
-    searchController.dispose();  // Dispose of the search controller when the widget is disposed
+    searchController.dispose();  
     super.dispose();
   }
 
@@ -80,7 +80,7 @@ class _ProductListState extends State<ProductList> {
       fillColor: Colors.white,
       contentPadding: EdgeInsets.symmetric(vertical: 14),
 
-      // Primary color border when NOT focused
+      
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(50),
         borderSide: BorderSide(
@@ -89,7 +89,7 @@ class _ProductListState extends State<ProductList> {
         ),
       ),
 
-      // Primary color border when focused
+      
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(50),
         borderSide: BorderSide(
