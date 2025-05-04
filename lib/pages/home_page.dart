@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawerEnableOpenDragGesture: false, 
       drawer: Drawer(
-        // ✅ Sidebar
+  
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         ),
         centerTitle: true,
         leading: Builder(
-          // ✅ Needed to access Scaffold context
+
           builder:
               (context) => IconButton(
                 icon: Icon(Icons.menu),
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                     () =>
                         Scaffold.of(
                           context,
-                        ).openDrawer(), // Open drawer manually
+                        ).openDrawer(), 
               ),
         ),
       ),
