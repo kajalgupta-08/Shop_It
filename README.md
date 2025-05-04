@@ -2,15 +2,16 @@
 
 A new Flutter project.
 
-## Getting Started
+Features
 
-This project is a starting point for a Flutter application.
+- User Authentication: Users can sign up, log in, and log out with Google authentication via Firebase.
 
-A few resources to get you started if this is your first Flutter project:
+- Product Catalog: Browse range of products.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Cart Management: Add or remove products in the cart (Implemented using Provider).
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+Future Enhancements:
+
+Integrating Machine Learning (ML) into  Shop It Flutter app using TensorFlow Lite (TFLite) to suggest outfits based on images uploaded by the use
+
