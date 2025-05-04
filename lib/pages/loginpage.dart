@@ -17,6 +17,7 @@ class _LoginpageState extends State<Loginpage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+  bool isLoading = false; 
 
   void signuserin() async {
     final email = emcont.text.trim();
@@ -49,21 +50,27 @@ class _LoginpageState extends State<Loginpage> {
           errorMessage = e.message ?? 'An unknown error occurred';
       }
 
-      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(errorMessage), backgroundColor: Colors.red),
       );
     }
   }
 
-
   Future<void> signInWithGoogle() async {
+    setState(() {
+      isLoading = true; 
+    });
+
     try {
-    
-      await _googleSignIn.signOut();
+      await _googleSignIn.signOut(); 
 
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return;
+      if (googleUser == null) {
+        setState(() {
+          isLoading = false; 
+        });
+        return;
+      }
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
@@ -74,8 +81,14 @@ class _LoginpageState extends State<Loginpage> {
       );
 
       await _auth.signInWithCredential(credential);
+      setState(() {
+        isLoading = false; 
+      });
       showSuccess("Logged in with Google!");
     } catch (e) {
+      setState(() {
+        isLoading = false; 
+      });
       showError("Google Sign-In failed");
       print(e);
     }
@@ -85,9 +98,8 @@ class _LoginpageState extends State<Loginpage> {
     if (!mounted) return;
     showDialog(
       context: context,
-      builder:
-          (context) =>
-              AlertDialog(title: Text("Error"), content: Text(message)),
+      builder: (context) =>
+          AlertDialog(title: Text("Error"), content: Text(message)),
     );
   }
 
@@ -95,9 +107,8 @@ class _LoginpageState extends State<Loginpage> {
     if (!mounted) return;
     showDialog(
       context: context,
-      builder:
-          (context) =>
-              AlertDialog(title: Text("Success"), content: Text(message)),
+      builder: (context) =>
+          AlertDialog(title: Text("Success"), content: Text(message)),
     );
   }
 
@@ -112,122 +123,121 @@ class _LoginpageState extends State<Loginpage> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Align(
-          alignment: Alignment.topCenter,
+        child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(24),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 10,
-                        spreadRadius: 2,
-                        offset: Offset(0, 4),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 400),
+              child: Container(
+                padding: const EdgeInsets.all(24),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Please Log In to continue",
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Please Log In to continue",
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
+                    ),
+                    SizedBox(height: 20),
+                    TextField(
+                      controller: emcont,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                        prefixIcon: Icon(Icons.email),
+                        hintText: 'Enter email',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
                         ),
                       ),
-                      SizedBox(height: 20),
-                      TextField(
-                        controller: emcont,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey[100],
-                          prefixIcon: Icon(Icons.email),
-                          hintText: 'Enter email',
-                          border: OutlineInputBorder(
+                    ),
+                    SizedBox(height: 20),
+                    TextField(
+                      controller: passcont,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                        prefixIcon: Icon(Icons.lock),
+                        hintText: 'Enter password',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        "Forgot Password?",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: signuserin,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      TextField(
-                        controller: passcont,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey[100],
-                          prefixIcon: Icon(Icons.lock),
-                          hintText: 'Enter password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Align(
-                        alignment: Alignment.centerRight,
                         child: Text(
-                          "Forgot Password?",
-                          style: TextStyle(color: Colors.black),
+                          'Log in',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: signuserin,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            padding: EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+                    ),
+                    SizedBox(height: 20),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => RegisterPage()),
+                          );
+                        },
+                        child: Text(
+                          "Not a member? Register now",
+                          style: TextStyle(fontSize: 18, color: Colors.blue),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                    Text("Or Log in with", style: TextStyle(fontSize: 18)),
+                    SizedBox(height: 15),
+                    isLoading
+                        ? CircularProgressIndicator() 
+                        : GestureDetector(
+                            onTap: signInWithGoogle,
+                            child: Image.asset(
+                              "assets/images/google.png",
+                              width: 60,
+                              height: 60,
                             ),
                           ),
-                          child: Text(
-                            'Log in',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => RegisterPage()),
-                            );
-                          },
-                          child: Text(
-                            "Not a member? Register now",
-                            style: TextStyle(fontSize: 18, color: Colors.blue),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      Text("Or Log in with", style: TextStyle(fontSize: 18)),
-                      SizedBox(height: 15),
-                      GestureDetector(
-                        onTap: signInWithGoogle,
-                        child: Image.asset(
-                          "assets/images/google.png",
-                          width: 60,
-                          height: 60,
-                        ),
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
