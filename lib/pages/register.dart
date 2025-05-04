@@ -38,8 +38,8 @@ class _RegisterPageState extends State<RegisterPage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context); // Close dialog
-                  Navigator.pop(context); // Return to login page
+                  Navigator.pop(context); 
+                  Navigator.pop(context); 
                 },
                 child: Text("OK"),
               ),
@@ -75,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 150),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/login.jpg'), // Same background as login
+            image: AssetImage('assets/images/login.jpg'), 
             fit: BoxFit.cover,
           ),
         ),
@@ -114,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       SizedBox(height: 20),
 
-                      // Email Field
+                   
                       TextField(
                         controller: emailController,
                         decoration: InputDecoration(
@@ -131,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       SizedBox(height: 20),
 
-                      // Password Field
+                    
                       TextField(
                         controller: passController,
                         obscureText: true,
@@ -149,7 +149,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       SizedBox(height: 20),
 
-                      // Register Button
+                  
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
@@ -169,7 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       SizedBox(height: 20),
 
-                      // Login Link
+                   
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
                         child: Text(
