@@ -12,18 +12,18 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  String selectedSize = ''; // Change to String instead of int
+  String selectedSize = ''; 
 
   void onTap() {
     if (selectedSize.isNotEmpty) {
-      // Check if size is selected
+     
       Provider.of<CartProvider>(context, listen: false).addproduct({
         'id': widget.product['id'],
         'title': widget.product['title'],
         'price': widget.product['price'],
         'imageUrl': widget.product['imageUrl'],
         'company': widget.product['company'],
-        'sizes': selectedSize, // Store the string size
+        'sizes': selectedSize, 
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -95,7 +95,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           onTap: () {
                             setState(() {
                               selectedSize =
-                                  size; // Update with selected size string
+                                  size; 
                             });
                           },
                           child: Chip(
