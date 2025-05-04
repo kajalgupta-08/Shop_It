@@ -14,7 +14,7 @@ class CartPage extends StatelessWidget {
         itemCount: cart.length,
         itemBuilder: (context, index) {
           final cartitem = cart[index];
-          // Getting the selected size from cart
+          
           final selectedSize = (cartitem['sizes'] as String);
 
           return ListTile(
@@ -36,7 +36,7 @@ class CartPage extends StatelessWidget {
               cartitem['title'].toString(),
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            subtitle: Text('Size: $selectedSize'),  // Displaying the size properly
+            subtitle: Text('Size: $selectedSize'),  
           );
         },
       ),
